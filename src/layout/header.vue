@@ -41,16 +41,19 @@ export default defineComponent({
     const state = reactive({
       isPlayerShow: false
     });
-
+    // 返回主页
     const goHomePage = () => {
       console.log("goHomePage");
     };
+    // 关闭全屏
     const exitFullscreen = () => {
       console.log("exitFullscreen");
     };
+    // 打卡全屏
     const fullscreen = () => {
       console.log("fullscreen");
     };
+    // 收起播放详情页
     const onClickDown = () => {
       console.log("onClickDown");
     };

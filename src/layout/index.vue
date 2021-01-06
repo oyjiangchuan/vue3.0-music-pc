@@ -22,6 +22,7 @@ import LayoutMenu from "./menu.vue";
 
 export default defineComponent({
   setup() {
+    // 获取route对象
     const route = useRoute();
     const state: any = reactive({
       routerViewCls: computed(() => {

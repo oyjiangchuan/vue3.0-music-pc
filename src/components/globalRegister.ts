@@ -3,11 +3,13 @@ import { App } from "vue";
 import * as utils from "@/utils/index";
 
 const globalRegister = (app: App) => {
+  // 获取common下的组件名称
   const requireComponent = require.context(
     "@/components/common",
     true,
     /[a-z0-9]+\.(jsx?|vue?|tsx)$/i
   );
+  // 根据common下组件名称全局注册组件
   requireComponent.keys().forEach(fileName => {
     const componentConfig = requireComponent(fileName);
     const componentName = componentConfig.default.name;
@@ -15,6 +17,7 @@ const globalRegister = (app: App) => {
       app.component(componentName, componentConfig.default || componentConfig);
     }
   });
+  // 挂载全局方法
   app.config.globalProperties.$utils = utils;
 };
 
