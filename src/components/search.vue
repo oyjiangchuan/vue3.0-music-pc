@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <a-input-search
+    <el-input
       @click="
         () => {
           searchPanelShow = true;
@@ -9,9 +9,10 @@
       @input="onInput"
       @keypress.enter="onEnterPress"
       placeholder="搜索"
+      prefix-icon="el-icon-search"
       ref="input"
-      v-model="searchKeyword"
-    ></a-input-search>
+      v-model.trim="searchKeyword"
+    ></el-input>
   </div>
 </template>
 

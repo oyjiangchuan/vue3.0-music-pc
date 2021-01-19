@@ -60,65 +60,58 @@
 }
 
 // popover
-.ant-popover {
+.el-popover {
+  background: var(--prompt-bg-color) !important;
   border: none !important;
   text-align: left;
+  @include box-shadow;
 }
-.ant-popover-inner {
+
+.el-popper.is-light .el-popper__arrow::before {
+  border: none !important;
   background: var(--prompt-bg-color) !important;
-  color: #606266 !important;
-}
-@each $direction in 'bottom' 'top' 'left' 'right' {
-  .ant-popover-arrow {
-    border-#{$direction}-color: var(--prompt-bg-color) !important;
-  }
 }
 
 // input
 $input-height: 24px;
-@mixin ant-input-style($color, $bg-color, $placeholder-color) {
-  .ant-input {
+@mixin el-input-style($color, $bg-color, $placeholder-color) {
+  .el-input__inner {
+    height: $input-height !important;
+    line-height: $input-height !important;
     background: #{$bg-color} !important;
     border: none !important;
     color: #{$color} !important;
+
+    &:hover {
+      border: none !important;
+    }
   }
+  .el-input__prefix {
+    i {
+      line-height: $input-height + 1px !important;
+      color: #{$color} !important;
+      transition: none !important;
+    }
+  }
+
   input::-webkit-input-placeholder {
     color: #{$placeholder-color} !important;
   }
 }
+
 // 外部覆写input-theme样式
-@mixin ant-input-theme($color, $bg-color, $placeholder-color: $color) {
-  .ant-input-search {
-    @include ant-input-style($color, $bg-color, $placeholder-color);
+@mixin el-input-theme($color, $bg-color, $placeholder-color: $color) {
+  .el-input {
+    @include el-input-style($color, $bg-color, $placeholder-color);
   }
 }
 
-.ant-input-search {
-  @include ant-input-style(
+.el-input {
+  @include el-input-style(
     var(--input-color),
     var(--input-bgcolor),
     var(--font-color-grey-shallow)
   );
-}
-
-.ant-input-affix-wrapper {
-  border: none !important;
-  height: $input-height !important;
-  line-height: $input-height !important;
-  background: var(--input-bgcolor) !important;
-  color: var(--input-color) !important;
-
-  &:hover {
-    border: none !important;
-  }
-
-  &:focus {
-    box-shadow: none !important;
-  }
-}
-
-.ant-input-affix-wrapper-focused {
-  box-shadow: none !important;
 }
 
 // pagination

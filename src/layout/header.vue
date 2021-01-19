@@ -70,7 +70,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "~@/style/antd-overwrite.scss";
+@import "~@/style/elementPlus-overwrite.scss";
 
 .header {
   display: flex;
@@ -79,18 +79,11 @@ export default defineComponent({
   background-color: var(--header-bgcolor);
   padding-right: 36px;
 
-  @include ant-input-theme(
+  @include el-input-theme(
     var(--header-input-color),
     var(--header-input-bgcolor),
     var(--header-input-placeholder-color)
   );
-
-  /* ::v-deep.iconfont {
-    // 这里的样式没有生效 使用/deep/ 又出现了错误。待解决
-    // ===> 已解决: 使用::v-deep代替/deep/
-    // 有些像 Sass 之类的预处理器无法正确解析 >>>。这种情况下你可以使用 /deep/ 或 ::v-deep 操作符取而代之——两者都是 >>> 的别名，同样可以正常工作(vue-loader官方文档：https://vue-loader.vuejs.org/zh/guide/scoped-css.html#%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%B9%E5%85%83%E7%B4%A0)
-    color: var(--header-font-color);
-  } */
 
   .left {
     padding: 14px 14px 0 8px;
@@ -160,5 +153,11 @@ export default defineComponent({
       margin-right: 16px;
     }
   }
+}
+::v-deep(.iconfont) {
+  // 这里的样式没有生效 使用/deep/ 又出现了错误。待解决
+  // ===> 已解决: 使用::v-deep代替/deep/
+  // 有些像 Sass 之类的预处理器无法正确解析 >>>。这种情况下你可以使用 /deep/ 或 ::v-deep 操作符取而代之——两者都是 >>> 的别名，同样可以正常工作(vue-loader官方文档：https://vue-loader.vuejs.org/zh/guide/scoped-css.html#%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%B9%E5%85%83%E7%B4%A0)
+  color: var(--header-font-color);
 }
 </style>

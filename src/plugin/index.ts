@@ -1,4 +1,4 @@
-import antds from "./antd";
+import elementPlus from "./element-plus";
 
-export const use = [...antds.components];
-export const protos = { ...antds.protos };
+export const components = [...elementPlus.components];
+export const plugins = [...elementPlus.plugins];

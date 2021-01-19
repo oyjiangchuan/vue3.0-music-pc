@@ -7,9 +7,9 @@ module.exports = {
     devServer: {
       open: true,
       proxy: {
-        "/netease-api": {
+        "/apiProxy": {
           target: "https://api.mtnhao.com/", // 网易云公网API地址
-          pathRewrite: { "^/netease-api": "" },
+          pathRewrite: { "^/apiProxy": "" },
           changeOrigin: true,
           secure: false
         }

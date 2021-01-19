@@ -1,21 +1,21 @@
 <template>
   <div class="theme">
-    <a-popover placement="bottomRight" width="230" trigger="click">
-      <template #content>
-        <div class="themes">
-          <div
-            :key="index"
-            @click="changeTheme(themeKey)"
-            class="theme-item"
-            v-for="(themeValue, themeKey, index) in themeMap"
-          >
-            <div :style="themeValue.style" class="theme-icon"></div>
-            <p>{{ themeValue.title }}</p>
-          </div>
+    <el-popover placement="top" v-model="visible" width="230">
+      <div class="themes">
+        <div
+          :key="index"
+          @click="changeTheme(themeKey)"
+          class="theme-item"
+          v-for="(themeValue, themeKey, index) in themeMap"
+        >
+          <div :style="themeValue.style" class="theme-icon"></div>
+          <p>{{ themeValue.title }}</p>
         </div>
+      </div>
+      <template #reference>
+        <Icon :backdrop="true" type="skin" />
       </template>
-      <Icon :backdrop="true" type="skin" />
-    </a-popover>
+    </el-popover>
   </div>
 </template>
 
@@ -59,7 +59,8 @@ export default defineComponent({
             backgroundColor: "#D33A31"
           }
         }
-      }
+      },
+      visible: false
     });
 
     const changeTheme = (themeKey: string) => {
