@@ -1,5 +1,5 @@
 // Icon组件
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { toRem } from "@/utils";
 import "./style/icon.scss";
 
@@ -14,19 +14,19 @@ export default defineComponent({
   name: "Icon",
   props: {
     size: {
-      type: Number,
+      type: Number as PropType<number>,
       default: 16
     },
     type: {
-      type: String,
+      type: String as PropType<string>,
       required: true
     },
     color: {
-      type: String,
+      type: String as PropType<string>,
       default: ""
     },
     backdrop: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false
     }
   },

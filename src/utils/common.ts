@@ -6,3 +6,12 @@ export const genImgUrl = (url: string, w: number, h: number) => {
   url += `?param=${w}y${h}`;
   return url;
 };
+
+export const pad = (num: number | string, n = 2) => {
+  let len = num.toString().length;
+  while (len < n) {
+    num = "0" + num;
+    len++;
+  }
+  return num;
+};

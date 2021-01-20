@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, PropType } from "vue";
 export default defineComponent({
   name: "PlayIcon",
   props: {
     size: {
-      type: Number,
+      type: Number as PropType<number>,
       default: 24
     }
   },
@@ -18,7 +18,7 @@ export default defineComponent({
     const wrapStyle = computed(() => {
       return { width: `${props.size}px`, height: `${props.size}px` };
     });
-    const iconSize = computed(() => {
+    const iconSize = computed<number>(() => {
       const iconSize = props.size * 0.6;
       return iconSize;
     });

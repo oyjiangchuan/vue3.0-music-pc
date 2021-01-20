@@ -12,11 +12,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
-  props: ["id", "img", "name", "desc"],
+  props: {
+    id: {
+      type: Number as PropType<number>,
+      required: true
+    },
+    img: {
+      type: String as PropType<string>,
+      required: true
+    },
+    name: {
+      type: String as PropType<string>,
+      required: true
+    },
+    desc: {
+      type: String as PropType<string>,
+      required: true
+    }
+  },
   setup(props) {
     const router = useRouter();
     const onClickCard = () => {
