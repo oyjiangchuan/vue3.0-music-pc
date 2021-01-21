@@ -5,7 +5,7 @@ export const convertBanner = (res: AxiosResponse<any>) => {
   return { banners };
 };
 
-export const convertRecommendList = (res: AxiosResponse<any>) => {
+export const convertCommon = (res: AxiosResponse<any>) => {
   const { result } = res.data;
   return { result };
 };

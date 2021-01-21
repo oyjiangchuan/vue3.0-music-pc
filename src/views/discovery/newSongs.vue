@@ -21,40 +21,45 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, reactive, toRefs } from "vue";
+import { defineComponent, computed, reactive } from "vue";
 import SongCard from "@/components/song-card.vue";
 import { getNewSongs } from "@/api";
-// import { createSong } from "@/utils";
+import { createSong } from "@/utils";
 // import { mapActions, mapMutations } from "@/store/helper/music";
 
 export default defineComponent({
   setup() {
     const songsLimit = 10;
     const state = reactive({
-      list: [],
+      list: new Array<any>(),
       chunkLimit: Math.ceil(songsLimit / 2)
     });
-    const nomalizeSong = (song: any) => {
-      console.log(song);
-      // const {
-      //   id,
-      //   name,
-      //   song: {
-      //     mvid,
-      //     artists,
-      //     album: { blurPicUrl },
-      //     duration
-      //   }
-      // } = song;
-      // return createSong({
-      //   id,
-      //   name,
-      //   img: blurPicUrl,
-      //   artists,
-      //   duration,
-      //   mvId: mvid
-      // });
+
+    const getData = async () => {
+      const { result } = await getNewSongs();
+      state.list = result;
     };
+    const nomalizeSong = (song: any) => {
+      const {
+        id,
+        name,
+        song: {
+          mvid,
+          artists,
+          album: { blurPicUrl },
+          duration
+        }
+      } = song;
+      return createSong({
+        id,
+        name,
+        img: blurPicUrl,
+        artists,
+        duration,
+        mvId: mvid
+      });
+    };
+
     const thunkedList = computed(() => {
       return [
         state.list.slice(0, state.chunkLimit),
@@ -64,10 +69,7 @@ export default defineComponent({
     const normalizedSongs = computed(() => {
       return state.list.map(song => nomalizeSong(song));
     });
-    const getData = async () => {
-      const { result } = await getNewSongs();
-      state.list = result;
-    };
+
     const getSongOrder = (listIndex: number, index: number) => {
       return listIndex * state.chunkLimit + index + 1;
     };
@@ -78,11 +80,13 @@ export default defineComponent({
       console.log("nomalizedSong", nomalizedSongIndex);
       console.log("normalizedSongs", normalizedSongs);
     };
+
+    getData();
+
     return {
-      ...toRefs(state),
       thunkedList,
-      getData,
       getSongOrder,
+      nomalizeSong,
       onClickSong
     };
   },

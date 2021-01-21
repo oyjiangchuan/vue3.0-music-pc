@@ -4,7 +4,7 @@
       <span class="order">{{ $utils.pad(order) }}</span>
     </div>
     <div class="img-wrap">
-      <img v-lazy="$utils.genImgUrl(img, 120)" />
+      <img :src="$utils.genImgUrl(img, 120)" />
       <PlayIcon class="play-icon" />
     </div>
     <div class="song-wrap">

@@ -3,8 +3,8 @@
   <div class="discovery-wrapper">
     <Banner />
     <RecommendList />
-    <!-- <NewSongs /> -->
-    <!-- <RecommendMV /> -->
+    <NewSongs />
+    <RecommendMV />
   </div>
 </template>
 
@@ -12,12 +12,17 @@
 import { defineComponent } from "vue";
 import Banner from "./banner.vue";
 import RecommendList from "./recommendList.vue";
-// import NewSongs from "./newSongs";
-// import RecommendMV from "./recommendMV";
+import NewSongs from "./newSongs.vue";
+import RecommendMV from "./recommendMV.vue";
 
 export default defineComponent({
   name: "discorvery",
-  components: { Banner, RecommendList }
+  components: {
+    Banner,
+    RecommendList,
+    NewSongs,
+    RecommendMV
+  }
 });
 </script>
 
