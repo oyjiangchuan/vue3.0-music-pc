@@ -51,9 +51,10 @@ declare interface Song {
   artists: Artist[];
   album?: Album;
   sq?: boolean;
-  duration?: number;
+  duration: number;
   durationStr?: string;
   mvId?: number;
+  [propName: string]: any;
 }
 
 declare interface Mv {

@@ -2,6 +2,9 @@
  * 业务工具方法
  */
 
+import { isDef } from "./common";
+import { getAlbum } from "@/api";
+
 function genSongPlayUrl(id: number) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
@@ -10,7 +13,7 @@ export const genArtistisText = (artists: any[]) => {
   return (artists || []).map(({ name }) => name).join("/");
 };
 
-export const createSong = (song: any) => {
+export const createSong = (song: Song) => {
   const {
     id,
     name,
@@ -40,3 +43,14 @@ export const createSong = (song: any) => {
     ...rest
   };
 };
+
+export async function getSongImg(id: number, albumId: number) {
+  if (!isDef(albumId)) {
+    throw new Error("need albumId");
+  }
+  const { songs } = await getAlbum(albumId);
+  const {
+    al: { picUrl }
+  } = songs.find(({ id: songId }: { id: number }) => songId === id) || {};
+  return picUrl;
+}

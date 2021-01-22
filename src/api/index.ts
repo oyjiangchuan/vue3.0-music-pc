@@ -1,1 +1,1 @@
-export * from "./discovery/index";
+export * from "./discovery";

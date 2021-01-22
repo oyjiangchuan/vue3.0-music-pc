@@ -25,10 +25,12 @@ import { defineComponent, computed, reactive } from "vue";
 import SongCard from "@/components/song-card.vue";
 import { getNewSongs } from "@/api";
 import { createSong } from "@/utils";
-// import { mapActions, mapMutations } from "@/store/helper/music";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
+    const store = useStore();
+    console.log("store", store);
     const songsLimit = 10;
     const state = reactive({
       list: new Array<any>(),

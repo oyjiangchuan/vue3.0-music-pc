@@ -35,3 +35,21 @@ export const formatTime = (interval: number) => {
   const second = pad(interval % 60);
   return `${minute}:${second}`;
 };
+
+export const shallowEqual = (a: Song[], b: Song[], compareKey: string) => {
+  if (a.length !== b.length) {
+    return false;
+  }
+  for (let i = 0; i < a.length; i++) {
+    let compareA = a[i];
+    let compareB = b[i];
+    if (compareKey) {
+      compareA = compareA[compareKey];
+      compareB = compareB[compareKey];
+    }
+    if (!Object.is(a[i], b[i])) {
+      return false;
+    }
+  }
+  return true;
+};

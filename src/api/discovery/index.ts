@@ -1,12 +1,13 @@
 // 发现音乐相关API
 import { request } from "../axios";
-import { convertBanner, convertCommon } from "./translate";
+import { convertBanner, convertCommon, convertAlbum } from "./translate";
 
 const REQUEST_URL = {
   banner: "/banner?type=0",
   recommendLists: "/personalized",
   newSongs: "/personalized/newsong",
-  mvs: "/personalized/mv"
+  mvs: "/personalized/mv",
+  album: "/album?id="
 };
 
 // 获取轮播图数据
@@ -30,3 +31,7 @@ export const getNewSongs = () => {
 export const getPersonalizedMv = () => {
   return request.get(REQUEST_URL.mvs).then(convertCommon);
 };
+
+// 歌词相关
+export const getAlbum = (id: number) =>
+  request.get(REQUEST_URL.album + id).then(convertAlbum);
