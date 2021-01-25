@@ -107,3 +107,7 @@ declare interface SingerRank {
   updateTime: string;
   artists: Artist[];
 }
+
+declare interface ArrayList {
+  [index: number]: any;
+}

@@ -1,5 +1,6 @@
 import storage from "good-storage";
 import { PLAY_HISTORY_KEY, getSongImg } from "@/utils";
+import { musicTypes } from "../../actionTypes";
 import { MusicState } from "../../interface";
 import { Commit, Dispatch } from "vuex";
 
@@ -21,8 +22,8 @@ export default {
         song.img = await getSongImg(song.id, song.albumId);
       }
     }
-    commit("setCurrentSong", song);
-    commit("setPlayingState", true);
+    commit(musicTypes.SET_CURRENT_SONG, song);
+    commit(musicTypes.SET_PLAYING_STATE, true);
     // 历史记录
     const { playHistory } = state;
     const playHistoryCopy = playHistory.slice();
@@ -32,21 +33,22 @@ export default {
       playHistoryCopy.splice(findedIndex, 1);
     }
     playHistoryCopy.unshift(song);
-    commit("setPlayHistory", playHistoryCopy);
+    commit(musicTypes.SET_PLAY_HISTORY, playHistoryCopy);
     storage.set(PLAY_HISTORY_KEY, playHistoryCopy);
   },
   clearCurrentSong({ commit }: Actions) {
-    commit("setCurrentSong", {});
-    commit("setPlayingState", false);
-    commit("setCurrentTime", 0);
+    console.log("dispatch/clearCurrentSong");
+    commit(musicTypes.SET_CURRENT_SONG, {});
+    commit(musicTypes.SET_PLAYING_STATE, false);
+    commit(musicTypes.SET_CURRENT_TIME, 0);
   },
   clearPlaylist({ commit, dispatch }: Actions) {
-    commit("setPlaylist", []);
+    commit(musicTypes.SET_PLAY_LIST, []);
     dispatch("clearCurrentSong");
   },
   clearHistory({ commit }: Actions) {
     const history: any[] = [];
-    commit("setPlayHistory", history);
+    commit(musicTypes.SET_PLAY_HISTORY, history);
     storage.set(PLAY_HISTORY_KEY, history);
   },
   addToPlaylist({ commit, state }: Actions, song: Song) {
@@ -54,7 +56,7 @@ export default {
     const copy = playlist.slice();
     if (!copy.find(({ id }) => id === song.id)) {
       copy.unshift(song);
-      commit("setPlaylist", copy);
+      commit(musicTypes.SET_PLAY_LIST, copy);
     }
   }
 };
