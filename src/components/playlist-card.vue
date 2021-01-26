@@ -18,20 +18,16 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   props: {
     id: {
-      type: Number as PropType<number>,
-      required: true
+      type: Number as PropType<number>
     },
     img: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     name: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     desc: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     }
   },
   setup(props) {

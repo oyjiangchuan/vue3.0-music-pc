@@ -26,24 +26,19 @@ import { isDef } from "@/utils";
 export default defineComponent({
   props: {
     id: {
-      type: Number as PropType<number>,
-      required: true
+      type: Number as PropType<number>
     },
     img: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     playCount: {
-      type: Number as PropType<number>,
-      required: true
+      type: Number as PropType<number>
     },
     name: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     author: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     duration: {
       type: Number as PropType<number>

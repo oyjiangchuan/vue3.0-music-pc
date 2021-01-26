@@ -53,3 +53,15 @@ export const shallowEqual = (a: Song[], b: Song[], compareKey: string) => {
   }
   return true;
 };
+
+// 锚链接置顶
+export const scrollInto = (dom: HTMLElement | null) => {
+  if (dom) {
+    dom.scrollIntoView({ behavior: "smooth" }); // Element.scrollIntoView()方法
+  }
+};
+
+// 处理请求偏移量
+export const getPageOffset = (page: number, limit: number) => {
+  return (page - 1) * limit;
+};

@@ -18,6 +18,7 @@
 import PlaylistCard from "@/components/playlist-card.vue";
 import { defineComponent, reactive, toRefs } from "vue";
 import { getRecommendList } from "@/api/index";
+
 export default defineComponent({
   setup() {
     const state = reactive({

@@ -12,6 +12,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { getBanner } from "@/api/index";
+
 export default defineComponent({
   setup() {
     const state = reactive({

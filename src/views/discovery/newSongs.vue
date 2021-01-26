@@ -69,7 +69,7 @@ export default defineComponent({
         state.list.slice(state.chunkLimit, state.list.length)
       ];
     });
-    const normalizedSongs: ArrayList = computed<Song[]>(() => {
+    const normalizedSongs = computed<Song[]>(() => {
       return state.list.map(song => nomalizeSong(song));
     });
 
@@ -79,7 +79,7 @@ export default defineComponent({
     const onClickSong = (listIndex: number, index: number) => {
       // 这里因为getSongOrder是从1开始显示, 所以当做数组下标需要减一
       const nomalizedSongIndex = getSongOrder(listIndex, index) - 1;
-      const nomalizedSong = normalizedSongs[nomalizedSongIndex];
+      const nomalizedSong = normalizedSongs.value[nomalizedSongIndex];
       store.dispatch("music/startSong", nomalizedSong);
       store.commit(`music/${musicTypes.SET_PLAY_LIST}`, normalizedSongs);
     };

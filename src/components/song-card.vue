@@ -19,20 +19,16 @@ import { defineComponent, PropType } from "vue";
 export default defineComponent({
   props: {
     order: {
-      type: Number as PropType<number>,
-      required: true
+      type: Number as PropType<number>
     },
     name: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     img: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     },
     artistsText: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
     }
   }
 });

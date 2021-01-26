@@ -1,6 +1,6 @@
 <template>
   <div class="theme">
-    <el-popover placement="top" v-model="visible" width="230">
+    <el-popover placement="top" width="230">
       <div class="themes">
         <div
           :key="index"
@@ -59,8 +59,7 @@ export default defineComponent({
             backgroundColor: "#D33A31"
           }
         }
-      },
-      visible: false
+      }
     });
 
     const changeTheme = (themeKey: string) => {
