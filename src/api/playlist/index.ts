@@ -1,7 +1,11 @@
 // 推荐歌单相关API
 import { request } from "../axios";
 
-import { convertPlayLists, convertCommon } from "./translate";
+import {
+  convertCommon,
+  convertListDetail,
+  convertSongDetail
+} from "./translate";
 
 const REQUEST_URL = {
   playLists: "/top/playlist",
@@ -13,7 +17,7 @@ const REQUEST_URL = {
 
 // 获取歌单列表
 export const getPlaylists = (params: any) =>
-  request.get(REQUEST_URL.playLists, { params }).then(convertPlayLists);
+  request.get(REQUEST_URL.playLists, { params }).then(convertCommon);
 
 // 获取头部精品歌单信息
 export const getTopPlaylists = (params: any) =>
@@ -25,8 +29,8 @@ export const getSimiPlaylists = (id: number, option: any) =>
 
 // 获取歌单详情页数据
 export const getListDetail = (params: any) =>
-  request.get(REQUEST_URL.listDetail, { params });
+  request.get(REQUEST_URL.listDetail, { params }).then(convertListDetail);
 
 // 获取音乐详情
 export const getSongDetail = (ids: number) =>
-  request.get(REQUEST_URL.songDetail + ids);
+  request.get(REQUEST_URL.songDetail + ids).then(convertSongDetail);

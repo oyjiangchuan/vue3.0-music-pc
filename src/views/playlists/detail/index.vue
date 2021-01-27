@@ -1,13 +1,149 @@
 <template>
-  <div>推荐歌单详情页面</div>
+  <div class="playlist-detail">
+    <Header :playlist="playlist" :songs="songs" ref="header" />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, toRefs, computed, watch, ref } from "vue";
+import { useRoute } from "vue-router";
+import { getListDetail, getSongDetail } from "@/api";
+import { scrollInto, createSong } from "@/utils";
+
+import Header from "./header.vue";
+const MAX = 500;
+const SONG_IDX = 0;
+const COMMENT_IDX = 1;
 
 export default defineComponent({
-  name: "playlistsDetail"
+  name: "playlistDetail",
+  components: { Header },
+  setup() {
+    const route = useRoute();
+    const header = ref<HTMLElement | null>(null);
+    const state = reactive({
+      SONG_IDX,
+      COMMENT_IDX,
+      tabs: ["歌曲列表", "评论"],
+      activeTab: SONG_IDX,
+      playlist: {},
+      songs: new Array<Song>(),
+      searchValue: "",
+      inputFocus: false
+    });
+    const id = computed(() => {
+      return Number(route.params.id);
+    });
+    const filteredSongs = computed(() => {
+      return state.songs.filter(({ name, artistsText, albumName }) =>
+        `${name}${artistsText}${albumName}`
+          .toLowerCase()
+          .includes(state.searchValue.toLowerCase())
+      );
+    });
+    const getSonglist = async (playlist: any) => {
+      const trackIds = playlist.trackIds.map(({ id }: { id: number }) => id);
+      const { songs: songDetails } = await getSongDetail(
+        trackIds.slice(0, MAX)
+      );
+      const songs = songDetails.map(({ id, name, al, ar, mv, dt }: Song) =>
+        createSong({
+          id,
+          name,
+          artists: ar,
+          duration: dt,
+          mvId: mv,
+          albumName: al.name,
+          img: al.picUrl
+        })
+      );
+      state.songs = songs;
+    };
+    // 获取数据
+    const init = async () => {
+      const { playlist } = await getListDetail({ id: id.value });
+      state.playlist = playlist;
+      getSonglist(playlist);
+    };
+    // 置顶
+    const scrollToHeader = () => {
+      if (header.value) {
+        scrollInto(header.value);
+      }
+    };
+    // 添加类名
+    const getInputCls = () => {
+      return !state.inputFocus ? "inactive" : "";
+    };
+    // 失焦事件
+    const onInputBlur = () => {
+      state.inputFocus = false;
+    };
+    // 聚焦事件
+    const onInputFocus = () => {
+      state.inputFocus = true;
+    };
+    // 修改tabs
+    const onCommentsUpdate = ({ total }: { total: number }) => {
+      state.tabs.splice(COMMENT_IDX, 1, `评论(${total})`);
+    };
+    watch(
+      id,
+      () => {
+        console.log("22222");
+        state.searchValue = "";
+        init();
+        scrollToHeader();
+      },
+      { immediate: true }
+    );
+    return {
+      ...toRefs(state),
+      filteredSongs,
+      getInputCls,
+      onInputBlur,
+      onInputFocus,
+      onCommentsUpdate
+    };
+  }
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.playlist-detail {
+  width: 100%;
+
+  .tabs-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 24px;
+    border-bottom: 1px solid var(--border);
+
+    .input {
+      width: 125px;
+
+      &:not(:hover) {
+        &.inactive {
+          ::v-deep.el-input__inner {
+            background-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+
+  .empty {
+    @include flex-center;
+    height: 200px;
+
+    .keyword {
+      color: $blue;
+    }
+  }
+
+  .comments {
+    padding: 16px 32px;
+  }
+}
+</style>

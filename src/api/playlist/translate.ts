@@ -1,11 +1,16 @@
 import { AxiosResponse } from "axios";
 
-export const convertPlayLists = (res: AxiosResponse<any>) => {
+export const convertCommon = (res: AxiosResponse<any>) => {
   const { playlists, total } = res.data;
   return { playlists, total };
 };
 
-export const convertCommon = (res: AxiosResponse<any>) => {
-  const { playlists } = res.data;
-  return { playlists };
+export const convertListDetail = (res: AxiosResponse<any>) => {
+  const { playlist, privileges } = res.data;
+  return { playlist, privileges };
+};
+
+export const convertSongDetail = (res: AxiosResponse<any>) => {
+  const { songs, privileges } = res.data;
+  return { songs, privileges };
 };

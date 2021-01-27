@@ -10,16 +10,6 @@ declare interface SingerSelectArgs {
   value: number | string;
 }
 
-declare interface PlayListItem {
-  id: number;
-  name: string;
-  picUrl: string;
-  playCount: number | string;
-  nickName: string;
-  copywriter?: string;
-  [propName: string]: any;
-}
-
 declare interface OwnerSendItem {
   id: number;
   name: string;
@@ -42,20 +32,6 @@ declare type Artist = {
   name: string;
   picUrl?: string;
 };
-
-declare interface Song {
-  id: number;
-  name: string;
-  picUrl?: string;
-  alias?: string;
-  artists: Artist[];
-  album?: Album;
-  sq?: boolean;
-  duration: number;
-  durationStr?: string;
-  mvId?: number;
-  [propName: string]: any;
-}
 
 declare interface Mv {
   id: number;
@@ -106,4 +82,26 @@ declare interface SingerRank {
   backgroundImgUrl: string;
   updateTime: string;
   artists: Artist[];
+}
+
+// 已用接口
+declare interface Song {
+  id: number;
+  name: string;
+  picUrl?: string;
+  alias?: string;
+  artists: Artist[];
+  album?: Album;
+  sq?: boolean;
+  duration: number;
+  durationStr?: string;
+  mvId?: number;
+  [propName: string]: any;
+}
+declare interface PlayListItem {
+  name: string;
+  coverImgUrl: string;
+  createTime: number;
+  description: string;
+  [propName: string]: any;
 }

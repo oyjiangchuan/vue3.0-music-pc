@@ -1,7 +1,7 @@
 <template>
   <div class="playlists-root">
     <div
-      v-if="route.path === '/playlists'"
+      v-if="currentPath === '/playlists'"
       class="playlists-wrapper"
       ref="playlistsDOM"
     >
@@ -13,72 +13,75 @@
           :name="topPlaylist.name"
         />
       </div>
-      <!-- <div class="tabs">
+      <div class="tabs">
         <Tabs
           :tabs="tabs"
-          v-model="activeTabIndex"
-          @tabChange="onTabChange"
+          v-model:active="activeTabIndex"
+          @update:active="onTabChange"
           align="right"
           type="small"
         />
-      </div> -->
+      </div>
       <div class="playlist-cards">
         <PlaylistCard
-          v-for="item in playlists"
-          :key="item.id"
+          v-for="(item, index) in playlists"
+          :key="item.id + index"
           :desc="`播放量：${$utils.formatNumber(item.playCount)}`"
           :id="item.id"
           :img="item.coverImgUrl"
           :name="item.name"
         />
       </div>
-      <!-- <Pagination
+      <Pagination
         class="pagination"
         :current-page="currentPage"
         :page-size="PAGE_SIZE"
         :total="total"
         @current-change="onPageChange"
-      ></Pagination> -->
+      ></Pagination>
     </div>
     <router-view v-else></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from "vue";
+import { defineComponent, reactive, ref, toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
 import { getPlaylists, getTopPlaylists } from "@/api";
 import { getPageOffset, scrollInto } from "@/utils";
 import PlaylistCard from "@/components/playlist-card.vue";
 import TopPlaylistCard from "@/components/top-playlist-card.vue";
+const PAGE_SIZE = 50;
+const tabs = [
+  "全部",
+  "欧美",
+  "华语",
+  "流行",
+  "说唱",
+  "摇滚",
+  "民谣",
+  "电子",
+  "轻音乐",
+  "影视原声",
+  "ACG",
+  "怀旧",
+  "治愈",
+  "旅行"
+];
 
 export default defineComponent({
   name: "playlists",
   setup() {
-    const PAGE_SIZE = 50;
-    const tabs = [
-      "全部",
-      "欧美",
-      "华语",
-      "流行",
-      "说唱",
-      "摇滚",
-      "民谣",
-      "电子",
-      "轻音乐",
-      "影视原声",
-      "ACG",
-      "怀旧",
-      "治愈",
-      "旅行"
-    ];
     const route = useRoute();
     const playlistsDOM = ref<HTMLElement | null>(null);
+    const currentPath = computed(() => {
+      return route.path;
+    });
     const state = reactive({
       PAGE_SIZE,
       tabs,
       activeTabIndex: 0,
-      playlists: [],
+      playlists: new Array<any>(),
       currentPage: 0,
       total: 0,
       topPlaylist: {}
@@ -121,7 +124,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      route,
+      currentPath, // 这里使用computed计算返回,不要直接返回route,避免不必要的性能消耗
       playlistsDOM,
       onPageChange,
       onTabChange
