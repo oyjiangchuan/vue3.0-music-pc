@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed, watch, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteLeave } from "vue-router";
 import { getListDetail, getSongDetail } from "@/api";
 import { scrollInto, createSong } from "@/utils";
 
@@ -87,16 +87,22 @@ export default defineComponent({
     const onCommentsUpdate = ({ total }: { total: number }) => {
       state.tabs.splice(COMMENT_IDX, 1, `评论(${total})`);
     };
-    watch(
+    // watch与watchEffect会返回一个unwatch函数,用于取消监听
+    const unWatch = watch(
       id,
       () => {
-        console.log("22222");
         state.searchValue = "";
         init();
         scrollToHeader();
       },
       { immediate: true }
     );
+    // 这里的bug是路由切换之后,watch还在执行,是因为watch的是route的参数？
+    // onBeforeRouteUpdat不触发（触发时机）
+    onBeforeRouteLeave(() => {
+      unWatch(); // 取消监听
+    });
+
     return {
       ...toRefs(state),
       filteredSongs,
