@@ -7,19 +7,19 @@
       <div class="content-title">
         <p class="title">{{ playlist.name }}</p>
       </div>
-      <div class="creator-wrap">
-        <!-- <img :src="playlist.creator.avatarUrl" class="avatar" /> -->
-        <!-- <p class="creator">{{ playlist.creator.nickname }}</p> -->
+      <div class="creator-wrap" v-if="playlist.creator">
+        <img :src="playlist.creator.avatarUrl" class="avatar" />
+        <p class="creator">{{ playlist.creator.nickname }}</p>
         <p class="create-time">
           {{ $utils.formatDate(playlist.createTime, "yyyy-MM-dd") }} 创建
         </p>
       </div>
-      <!-- <div class="action-wrap">
+      <div class="action-wrap">
         <NButton @click="playAll" class="button">
           <Icon class="icon middle" color="white" type="play-round" />
           <span class="middle">播放全部</span>
         </NButton>
-      </div> -->
+      </div>
       <div class="desc-wrap">
         <p class="desc" v-if="tagsText">
           <span>标签：{{ tagsText }}</span>
