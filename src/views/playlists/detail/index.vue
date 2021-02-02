@@ -1,6 +1,27 @@
 <template>
   <div class="playlist-detail">
     <Header :playlist="playlist" :songs="songs" ref="header" />
+    <div class="tabs-wrap">
+      <Tabs :tabs="tabs" type="theme" v-model:active="activeTab" />
+      <el-input
+        :class="getInputCls()"
+        class="input"
+        @blur="onInputBlur"
+        @focus="onInputFocus"
+        placeholder="搜索歌单音乐"
+        prefix-icon="el-icon-search"
+        v-model="searchValue"
+        v-show="activeTab === SONG_IDX"
+      />
+    </div>
+    <div class="empty" v-if="searchValue && !filteredSongs.length">
+      未找到和
+      <span class="keyword">{{ searchValue }}</span>
+      相关的任何音乐
+    </div>
+    <div class="comments" v-show="activeTab === COMMENT_IDX">
+      <Comments :id="id" @update="onCommentsUpdate" type="playlist" />
+    </div>
   </div>
 </template>
 
@@ -9,6 +30,7 @@ import { defineComponent, reactive, toRefs, computed, watch, ref } from "vue";
 import { useRoute, onBeforeRouteLeave } from "vue-router";
 import { getListDetail, getSongDetail } from "@/api";
 import { scrollInto, createSong } from "@/utils";
+import Comments from "@/components/comments.vue";
 
 import Header from "./header.vue";
 const MAX = 500;
@@ -17,7 +39,7 @@ const COMMENT_IDX = 1;
 
 export default defineComponent({
   name: "playlistDetail",
-  components: { Header },
+  components: { Header, Comments },
   setup() {
     const route = useRoute();
     const header = ref<HTMLElement | null>(null);
@@ -105,6 +127,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      id,
       filteredSongs,
       getInputCls,
       onInputBlur,

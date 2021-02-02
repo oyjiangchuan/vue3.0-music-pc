@@ -45,27 +45,6 @@ declare interface Mv {
   [propName: string]: any;
 }
 
-declare type Replied = {
-  id: number;
-  name: string;
-  commentId: number;
-  avatarUrl: string;
-  content: string;
-  time: string;
-  likedCount: number;
-};
-
-declare interface Comment {
-  id: number;
-  name: string;
-  commentId: number;
-  avatarUrl: string;
-  content: string;
-  time: string;
-  likedCount: number;
-  beReplied: Replied[];
-}
-
 // rank
 declare interface CommonRank {
   id: number;
@@ -85,6 +64,9 @@ declare interface SingerRank {
 }
 
 // 已用接口
+declare interface CommonInterFace {
+  [propName: string]: any;
+}
 declare interface Song {
   id: number;
   name: string;
@@ -105,3 +87,24 @@ declare interface PlayListItem {
   description: string;
   [propName: string]: any;
 }
+declare interface Comment {
+  id: number;
+  name: string;
+  commentId: number;
+  avatarUrl: string;
+  content: string;
+  time: string | number;
+  likedCount: number;
+  beReplied: Replied[];
+  [propName: string]: any;
+}
+
+declare type Replied = {
+  id: number;
+  name: string;
+  commentId: number;
+  avatarUrl: string;
+  content: string;
+  time: string;
+  likedCount: number;
+};

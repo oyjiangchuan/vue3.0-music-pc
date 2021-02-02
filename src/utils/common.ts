@@ -108,3 +108,8 @@ export const scrollInto = (dom: HTMLElement | null) => {
 export const getPageOffset = (page: number, limit: number) => {
   return (page - 1) * limit;
 };
+
+// 判断是不是最后一条数据
+export const isLast = (index: number, arr: any) => {
+  return index === arr.length - 1;
+};
