@@ -8,7 +8,7 @@ module.exports = {
       open: true,
       proxy: {
         "/apiProxy": {
-          target: "https://api.mtnhao.com/", // 网易云公网API地址
+          target: "http://192.144.232.23:3000/", // 网易云公网API地址
           pathRewrite: { "^/apiProxy": "" },
           changeOrigin: true,
           secure: false
